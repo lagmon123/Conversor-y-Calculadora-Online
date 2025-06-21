@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conversor de Longitud</title>
+  <meta name="description" content="Convierte entre mm, cm, m, km, pulgadas, pies y millas. Conversor de longitud gratuito y online.">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+      color: #0073aa;
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+    }
+    button {
+      width: 100%;
+      padding: 0.7em;
+      background: #0073aa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #resultado {
+      margin-top: 1em;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Conversor de Longitud</h2>
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor" placeholder="Ej: 100" />
+
+    <label for="desde">Desde:</label>
+    <select id="desde">
+      <option value="mm">Milímetros (mm)</option>
+      <option value="cm">Centímetros (cm)</option>
+      <option value="m">Metros (m)</option>
+      <option value="km">Kilómetros (km)</option>
+      <option value="in">Pulgadas (in)</option>
+      <option value="ft">Pies (ft)</option>
+      <option value="mi">Millas (mi)</option>
+    </select>
+
+    <label for="hacia">Hacia:</label>
+    <select id="hacia">
+      <option value="mm">Milímetros (mm)</option>
+      <option value="cm">Centímetros (cm)</option>
+      <option value="m">Metros (m)</option>
+      <option value="km">Kilómetros (km)</option>
+      <option value="in">Pulgadas (in)</option>
+      <option value="ft">Pies (ft)</option>
+      <option value="mi">Millas (mi)</option>
+    </select>
+
+    <button onclick="convertir()">Convertir</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function convertir() {
+      const valor = parseFloat(document.getElementById("valor").value);
+      const desde = document.getElementById("desde").value;
+      const hacia = document.getElementById("hacia").value;
+
+      if (isNaN(valor)) {
+        document.getElementById("resultado").innerText = "Ingrese un número válido.";
+        return;
+      }
+
+      // Valores equivalentes a metros
+      const aMetros = {
+        mm: 0.001,
+        cm: 0.01,
+        m: 1,
+        km: 1000,
+        in: 0.0254,
+        ft: 0.3048,
+        mi: 1609.34
+      };
+
+      const valorEnMetros = valor * aMetros[desde];
+      const resultado = valorEnMetros / aMetros[hacia];
+
+      document.getElementById("resultado").innerText =
+        valor + " " + desde + " = " + resultado.toFixed(6) + " " + hacia;
+    }
+  </script>
+</body>
+</html>
