@@ -114,3 +114,31 @@ nav a:hover {
 #feedback button:hover {
   background-color: #219150;
 }
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  nav a {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  #feedback h2 {
+    font-size: 1.2rem;
+  }
+
+  #feedback input,
+  #feedback textarea {
+    font-size: 0.95rem;
+  }
+
+  #feedback button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
