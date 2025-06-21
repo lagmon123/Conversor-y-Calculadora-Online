@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora de Impedancia</title>
+  <title>Calculadora de Reactancia y Frecuencia</title>
   <style>
     body {
       font-family: sans-serif;
@@ -25,13 +25,16 @@
   </style>
 </head>
 <body>
-  <h1>Calculadora de Impedancia (Z)</h1>
+  <h1>Calculadora de Reactancia y Frecuencia</h1>
 
   <label for="opcion">¿Qué querés calcular?</label>
   <select id="opcion">
-    <option value="z">Impedancia (Z)</option>
-    <option value="r">Resistencia (R)</option>
-    <option value="x">Reactancia (X)</option>
+    <option value="xc">Reactancia capacitiva (Xc)</option>
+    <option value="xl">Reactancia inductiva (Xl)</option>
+    <option value="f_xc">Frecuencia (a partir de Xc)</option>
+    <option value="f_xl">Frecuencia (a partir de Xl)</option>
+    <option value="c">Capacitancia (C)</option>
+    <option value="l">Inductancia (L)</option>
   </select>
 
   <div id="inputs"></div>
@@ -44,20 +47,37 @@
     const inputsDiv = document.getElementById("inputs");
     const opcionSelect = document.getElementById("opcion");
     const resultadoDiv = document.getElementById("resultado");
+    const pi = Math.PI;
 
     function mostrarInputs() {
       const opcion = opcionSelect.value;
       let html = "";
 
-      if (opcion === "z") {
-        html += `<label for="r">Resistencia R (Ω):</label><input type="number" id="r" step="any">`;
-        html += `<label for="x">Reactancia X (Ω):</label><input type="number" id="x" step="any">`;
-      } else if (opcion === "r") {
-        html += `<label for="z">Impedancia Z (Ω):</label><input type="number" id="z" step="any">`;
-        html += `<label for="x">Reactancia X (Ω):</label><input type="number" id="x" step="any">`;
-      } else if (opcion === "x") {
-        html += `<label for="z">Impedancia Z (Ω):</label><input type="number" id="z" step="any">`;
-        html += `<label for="r">Resistencia R (Ω):</label><input type="number" id="r" step="any">`;
+      switch(opcion) {
+        case "xc":
+          html += `<label for="f">Frecuencia f (Hz):</label><input type="number" id="f" step="any">`;
+          html += `<label for="c">Capacitancia C (F):</label><input type="number" id="c" step="any">`;
+          break;
+        case "xl":
+          html += `<label for="f">Frecuencia f (Hz):</label><input type="number" id="f" step="any">`;
+          html += `<label for="l">Inductancia L (H):</label><input type="number" id="l" step="any">`;
+          break;
+        case "f_xc":
+          html += `<label for="xc">Reactancia Xc (Ω):</label><input type="number" id="xc" step="any">`;
+          html += `<label for="c">Capacitancia C (F):</label><input type="number" id="c" step="any">`;
+          break;
+        case "f_xl":
+          html += `<label for="xl">Reactancia Xl (Ω):</label><input type="number" id="xl" step="any">`;
+          html += `<label for="l">Inductancia L (H):</label><input type="number" id="l" step="any">`;
+          break;
+        case "c":
+          html += `<label for="xc">Reactancia Xc (Ω):</label><input type="number" id="xc" step="any">`;
+          html += `<label for="f">Frecuencia f (Hz):</label><input type="number" id="f" step="any">`;
+          break;
+        case "l":
+          html += `<label for="xl">Reactancia Xl (Ω):</label><input type="number" id="xl" step="any">`;
+          html += `<label for="f">Frecuencia f (Hz):</label><input type="number" id="f" step="any">`;
+          break;
       }
 
       inputsDiv.innerHTML = html;
@@ -69,26 +89,54 @@
       let resultado;
 
       try {
-        if (opcion === "z") {
-          const R = parseFloat(document.getElementById("r").value);
-          const X = parseFloat(document.getElementById("x").value);
-          if (isNaN(R) || isNaN(X)) throw "Datos inválidos";
-          resultado = Math.sqrt(R**2 + X**2);
-          resultadoDiv.innerHTML = `Impedancia (Z) = ${resultado.toFixed(3)} Ω`;
-        } else if (opcion === "r") {
-          const Z = parseFloat(document.getElementById("z").value);
-          const X = parseFloat(document.getElementById("x").value);
-          if (isNaN(Z) || isNaN(X)) throw "Datos inválidos";
-          const R = Math.sqrt(Z**2 - X**2);
-          if (isNaN(R)) throw "Z debe ser mayor que X";
-          resultadoDiv.innerHTML = `Resistencia (R) = ${R.toFixed(3)} Ω`;
-        } else if (opcion === "x") {
-          const Z = parseFloat(document.getElementById("z").value);
-          const R = parseFloat(document.getElementById("r").value);
-          if (isNaN(Z) || isNaN(R)) throw "Datos inválidos";
-          const X = Math.sqrt(Z**2 - R**2);
-          if (isNaN(X)) throw "Z debe ser mayor que R";
-          resultadoDiv.innerHTML = `Reactancia (X) = ${X.toFixed(3)} Ω`;
+        switch(opcion) {
+          case "xc":
+            const f1 = parseFloat(document.getElementById("f").value);
+            const c1 = parseFloat(document.getElementById("c").value);
+            if (isNaN(f1) || isNaN(c1) || f1 <= 0 || c1 <= 0) throw "Valores inválidos";
+            resultado = 1 / (2 * pi * f1 * c1);
+            resultadoDiv.innerHTML = `Xc = ${resultado.toFixed(3)} Ω`;
+            break;
+
+          case "xl":
+            const f2 = parseFloat(document.getElementById("f").value);
+            const l1 = parseFloat(document.getElementById("l").value);
+            if (isNaN(f2) || isNaN(l1) || f2 <= 0 || l1 <= 0) throw "Valores inválidos";
+            resultado = 2 * pi * f2 * l1;
+            resultadoDiv.innerHTML = `Xl = ${resultado.toFixed(3)} Ω`;
+            break;
+
+          case "f_xc":
+            const xc1 = parseFloat(document.getElementById("xc").value);
+            const c2 = parseFloat(document.getElementById("c").value);
+            if (isNaN(xc1) || isNaN(c2) || xc1 <= 0 || c2 <= 0) throw "Valores inválidos";
+            resultado = 1 / (2 * pi * xc1 * c2);
+            resultadoDiv.innerHTML = `f = ${resultado.toFixed(3)} Hz`;
+            break;
+
+          case "f_xl":
+            const xl1 = parseFloat(document.getElementById("xl").value);
+            const l2 = parseFloat(document.getElementById("l").value);
+            if (isNaN(xl1) || isNaN(l2) || xl1 <= 0 || l2 <= 0) throw "Valores inválidos";
+            resultado = xl1 / (2 * pi * l2);
+            resultadoDiv.innerHTML = `f = ${resultado.toFixed(3)} Hz`;
+            break;
+
+          case "c":
+            const xc2 = parseFloat(document.getElementById("xc").value);
+            const f3 = parseFloat(document.getElementById("f").value);
+            if (isNaN(xc2) || isNaN(f3) || xc2 <= 0 || f3 <= 0) throw "Valores inválidos";
+            resultado = 1 / (2 * pi * f3 * xc2);
+            resultadoDiv.innerHTML = `C = ${resultado.toExponential(3)} F`;
+            break;
+
+          case "l":
+            const xl2 = parseFloat(document.getElementById("xl").value);
+            const f4 = parseFloat(document.getElementById("f").value);
+            if (isNaN(xl2) || isNaN(f4) || xl2 <= 0 || f4 <= 0) throw "Valores inválidos";
+            resultado = xl2 / (2 * pi * f4);
+            resultadoDiv.innerHTML = `L = ${resultado.toExponential(3)} H`;
+            break;
         }
       } catch (e) {
         resultadoDiv.innerHTML = "⚠️ " + e;
