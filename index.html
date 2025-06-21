@@ -3,262 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Conversores y Calculadoras Online</title>
-  <meta name="description" content="Sitio con conversores y calculadoras online gratuitas: temperatura, presión, energía, velocidad, masa, tiempo, impedancia y más." />
-  <style>
-    /* Reset básico */
-    * {
-      box-sizing: border-box;
-    }
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background-color: #f0f4f8;
-      color: #333;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 260px;
-      background: #0073aa;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding: 1.5em 1em;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      overflow-y: auto;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    }
-    .sidebar h2 {
-      margin: 0 0 1em 0;
-      font-weight: 700;
-      font-size: 1.5em;
-      text-align: center;
-    }
-    .sidebar nav a {
-      color: white;
-      text-decoration: none;
-      display: block;
-      padding: 0.8em 1em;
-      margin: 0.3em 0;
-      border-radius: 6px;
-      transition: background-color 0.2s ease;
-      font-weight: 600;
-    }
-    .sidebar nav a:hover,
-    .sidebar nav a:focus {
-      background-color: #005f7f;
-      outline: none;
-    }
-
-    /* Contenido principal */
-    main {
-      margin-left: 260px;
-      padding: 2em;
-      flex-grow: 1;
-      max-width: calc(100% - 260px);
-    }
-    main header {
-      margin-bottom: 2em;
-      text-align: center;
-    }
-    main header h1 {
-      color: #0073aa;
-      margin: 0 0 0.3em 0;
-    }
-    main header p {
-      color: #555;
-      font-size: 1.1em;
-      margin: 0;
-    }
-
-    /* Cards para enlaces en el contenido (opcional) */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-      gap: 1.5em;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 1.5em;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: transform 0.2s ease;
-      cursor: pointer;
-      user-select: none;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .card a {
-      text-decoration: none;
-      color: #0073aa;
-      font-size: 1.25em;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-      text-align: center;
-      pointer-events: none; /* Evitar clic duplicado */
-    }
-    .card p {
-      font-size: 0.95em;
-      color: #444;
-      text-align: center;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 0.5em 1em;
-      }
-      .sidebar h2 {
-        display: none;
-      }
-      .sidebar nav {
-        display: flex;
-        flex-wrap: nowrap;
-      }
-      .sidebar nav a {
-        padding: 0.5em 1em;
-        margin: 0 0.3em;
-        white-space: nowrap;
-        border-radius: 6px;
-      }
-      main {
-        margin-left: 0;
-        max-width: 100%;
-        padding: 1em;
-      }
-      .cards {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 480px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <title>Conversor y Calculadora Online</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <aside class="sidebar" role="navigation" aria-label="Menú de navegación principal">
-    <h2>Menú</h2>
-    <nav>
-      <a href="temperatura.html" tabindex="0">Temperatura</a>
-      <a href="presion.html" tabindex="0">Presión</a>
-      <a href="energia.html" tabindex="0">Energía</a>
-      <a href="potencia.html" tabindex="0">Potencia</a>
-      <a href="ohm.html" tabindex="0">Ley de Ohm</a>
-      <a href="velocidad.html" tabindex="0">Velocidad</a>
-      <a href="longitud.html" tabindex="0">Longitud</a>
-      <a href="masa.html" tabindex="0">Masa</a>
-      <a href="tiempo.html" tabindex="0">Tiempo</a>
-      <a href="superficie.html" tabindex="0">Superficie</a>
-      <a href="impedancia.html" tabindex="0">Impedancia RLC</a>
-      <a href="caudal.html" tabindex="0">Caudal (Q)</a>
-    </nav>
-  </aside>
+  <header>
+    <h1>Conversor y Calculadora Online</h1>
+  </header>
 
   <main>
-    <header>
-      <h1>Conversores y Calculadoras Online</h1>
-      <p>Convierte unidades y calcula fácilmente con herramientas gratuitas y rápidas.</p>
-    </header>
+    <p>Bienvenido a la mejor web de conversores y calculadoras. Elegí una calculadora para comenzar:</p>
 
-    <section class="cards" aria-label="Lista de herramientas disponibles">
-      <div class="card" onclick="location.href='temperatura.html'">
-        <a href="temperatura.html">Conversor de Temperatura</a>
-        <p>Convierte entre Celsius, Fahrenheit y Kelvin.</p>
-      </div>
-
-      <div class="card" onclick="location.href='presion.html'">
-        <a href="presion.html">Conversor de Presión</a>
-        <p>Convierte entre Pascal, atmósferas, bar y más.</p>
-      </div>
-
-      <div class="card" onclick="location.href='energia.html'">
-        <a href="energia.html">Conversor de Energía</a>
-        <p>Convierte entre julios, calorías, kWh y más.</p>
-      </div>
-
-      <div class="card" onclick="location.href='potencia.html'">
-        <a href="potencia.html">Conversor de Potencia</a>
-        <p>Convierte entre vatios, caballos de fuerza, BTU/h y más.</p>
-      </div>
-
-      <div class="card" onclick="location.href='ohm.html'">
-        <a href="ohm.html">Calculadora Ley de Ohm</a>
-        <p>Calcula voltaje, corriente, resistencia y potencia.</p>
-      </div>
-
-      <div class="card" onclick="location.href='velocidad.html'">
-        <a href="velocidad.html">Conversor de Velocidad</a>
-        <p>Convierte entre km/h, m/s, mph y nudos.</p>
-      </div>
-
-      <div class="card" onclick="location.href='longitud.html'">
-        <a href="longitud.html">Conversor de Longitud</a>
-        <p>Convierte entre mm, cm, m, km, pulgadas, pies y millas.</p>
-      </div>
-
-      <div class="card" onclick="location.href='masa.html'">
-        <a href="masa.html">Conversor de Masa</a>
-        <p>Convierte entre mg, g, kg, toneladas, libras y onzas.</p>
-      </div>
-
-      <div class="card" onclick="location.href='tiempo.html'">
-        <a href="tiempo.html">Conversor de Tiempo</a>
-        <p>Convierte entre segundos, minutos, horas, días y semanas.</p>
-      </div>
-
-      <div class="card" onclick="location.href='superficie.html'">
-        <a href="superficie.html">Conversor de Superficie</a>
-        <p>Convierte entre metros cuadrados, hectáreas, acres, pies² y más.</p>
-      </div>
-
-      <div class="card" onclick="location.href='impedancia.html'">
-        <a href="impedancia.html">Calculadora de Impedancia RLC</a>
-        <p>Calcula impedancia en circuitos RLC con resistencia, inductancia y capacitancia.</p>
-      </div>
-
-      <div class="card" onclick="location.href='caudal.html'">
-        <a href="caudal.html">Calculadora de Caudal (Q)</a>
-        <p>Calcula caudal a partir del área y la velocidad del fluido.</p>
-      </div>
-    </section>
-    <section id="feedback" style="margin-top: 40px;">
-      <h2>💬 Dejanos tu opinión o sugerencia</h2>
-      <form action="https://formspree.io/f/abcdxyz" method="POST">
-        <label for="nombre">Tu nombre (opcional):</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Juan, Ana...">
-
-        <label for="mensaje">Tu mensaje:</label>
-        <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribí acá tus comentarios..."></textarea>
-
-        <button type="submit">Enviar</button>
-      </form>
-    </section>
-
+    <nav>
+      <ul>
+        <li><a href="temperatura.html">Conversor de Temperatura</a></li>
+        <li><a href="presion.html">Conversor de Presión</a></li>
+        <li><a href="energia.html">Conversor de Energía</a></li>
+        <li><a href="potencia.html">Calculadora de Potencia</a></li>
+        <li><a href="ohm.html">Calculadora Ley de Ohm</a></li>
+        <li><a href="velocidad.html">Conversor de Velocidad</a></li>
+        <li><a href="longitud.html">Conversor de Longitud</a></li>
+        <li><a href="masa.html">Conversor de Masa</a></li>
+        <li><a href="tiempo.html">Conversor de Tiempo</a></li>
+        <li><a href="superficie.html">Conversor de Superficie</a></li>
+        <li><a href="impedancia.html">Calculadora de Impedancia</a></li>
+        <li><a href="caudal.html">Calculadora de Caudal</a></li>
+      </ul>
+    </nav>
   </main>
+
+  <section id="feedback">
+    <h2>💬 Dejanos tu opinión o sugerencia</h2>
+    <form action="https://formspree.io/f/abcdxyz" method="POST">
+      <label for="nombre">Tu nombre (opcional):</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Juan, Ana...">
+
+      <label for="mensaje">Tu mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribí acá tus comentarios..."></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
 
 </body>
 </html>
-
