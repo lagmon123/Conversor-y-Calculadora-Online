@@ -2,82 +2,100 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Potencia Eléctrica</title>
-  <meta name="description" content="Calcula la potencia eléctrica (Watts) a partir del voltaje (V) y la corriente (A). Calculadora simple, rápida y gratuita.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Potencia</title>
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f9f9f9;
-      padding: 2em;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      background: white;
-      padding: 2em;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
       border-radius: 12px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 1em;
-      color: #0073aa;
-    }
-    label, input {
+    label, select, input, button {
       display: block;
+      margin: 15px 0;
       width: 100%;
-      margin-bottom: 1em;
-    }
-    button {
-      width: 100%;
-      padding: 0.7em;
-      background: #0073aa;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
     }
     #resultado {
-      margin-top: 1em;
+      margin-top: 20px;
       font-weight: bold;
-      text-align: center;
-      font-size: 1.1em;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Calculadora de Potencia Eléctrica</h2>
+  <h1>Calculadora de Potencia Eléctrica</h1>
 
-    <label for="voltaje">Voltaje (V):</label>
-    <input type="number" id="voltaje" placeholder="Ej: 220" />
+  <label for="opcion">¿Qué querés calcular?</label>
+  <select id="opcion">
+    <option value="p">Potencia (P)</option>
+    <option value="v">Voltaje (V)</option>
+    <option value="i">Corriente (I)</option>
+  </select>
 
-    <label for="corriente">Corriente (A):</label>
-    <input type="number" id="corriente" placeholder="Ej: 5" />
+  <div id="inputs"></div>
 
-    <button onclick="calcular()">Calcular Potencia</button>
+  <button onclick="calcular()">Calcular</button>
 
-    <div id="resultado"></div>
-  </div>
+  <div id="resultado"></div>
 
   <script>
-    function calcular() {
-      const voltaje = parseFloat(document.getElementById("voltaje").value);
-      const corriente = parseFloat(document.getElementById("corriente").value);
+    const inputsDiv = document.getElementById("inputs");
+    const opcionSelect = document.getElementById("opcion");
+    const resultadoDiv = document.getElementById("resultado");
 
-      if (isNaN(voltaje) || isNaN(corriente)) {
-        document.getElementById("resultado").innerText = "Ingrese valores válidos.";
-        return;
+    function mostrarInputs() {
+      const opcion = opcionSelect.value;
+      let html = "";
+
+      if (opcion === "p") {
+        html += `<label for="v">Voltaje V (V):</label><input type="number" id="v" step="any">`;
+        html += `<label for="i">Corriente I (A):</label><input type="number" id="i" step="any">`;
+      } else if (opcion === "v") {
+        html += `<label for="p">Potencia P (W):</label><input type="number" id="p" step="any">`;
+        html += `<label for="i">Corriente I (A):</label><input type="number" id="i" step="any">`;
+      } else if (opcion === "i") {
+        html += `<label for="p">Potencia P (W):</label><input type="number" id="p" step="any">`;
+        html += `<label for="v">Voltaje V (V):</label><input type="number" id="v" step="any">`;
       }
 
-      const potencia = voltaje * corriente;
-      document.getElementById("resultado").innerText =
-        "Potencia = " + potencia.toFixed(2) + " W";
+      inputsDiv.innerHTML = html;
+      resultadoDiv.innerHTML = "";
     }
+
+    function calcular() {
+      const opcion = opcionSelect.value;
+      let resultado;
+
+      try {
+        if (opcion === "p") {
+          const V = parseFloat(document.getElementById("v").value);
+          const I = parseFloat(document.getElementById("i").value);
+          if (isNaN(V) || isNaN(I)) throw "Datos inválidos";
+          resultado = V * I;
+          resultadoDiv.innerHTML = `Potencia (P) = ${resultado.toFixed(2)} W`;
+        } else if (opcion === "v") {
+          const P = parseFloat(document.getElementById("p").value);
+          const I = parseFloat(document.getElementById("i").value);
+          if (isNaN(P) || isNaN(I) || I === 0) throw "Datos inválidos";
+          resultado = P / I;
+          resultadoDiv.innerHTML = `Voltaje (V) = ${resultado.toFixed(2)} V`;
+        } else if (opcion === "i") {
+          const P = parseFloat(document.getElementById("p").value);
+          const V = parseFloat(document.getElementById("v").value);
+          if (isNaN(P) || isNaN(V) || V === 0) throw "Datos inválidos";
+          resultado = P / V;
+          resultadoDiv.innerHTML = `Corriente (I) = ${resultado.toFixed(2)} A`;
+        }
+      } catch (e) {
+        resultadoDiv.innerHTML = "⚠️ " + e;
+      }
+    }
+
+    opcionSelect.addEventListener("change", mostrarInputs);
+    mostrarInputs();
   </script>
 </body>
 </html>
+
