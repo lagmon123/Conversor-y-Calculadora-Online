@@ -1,0 +1,83 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 10px;
+}
+
+/* Encabezados */
+header h1 {
+  text-align: center;
+}
+
+/* Navegación */
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 8px 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #007BFF;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Sección de feedback */
+#feedback {
+  margin-top: 30px;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+/* Etiquetas y campos del formulario */
+#feedback label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#feedback input,
+#feedback textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: inherit;
+}
+
+/* Estilos para todos los botones */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  margin-top: 15px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #0056b3;
+}
