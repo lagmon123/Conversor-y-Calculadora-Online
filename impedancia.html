@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de Impedancia</title>
+  <meta name="description" content="Calcula la impedancia de un circuito RLC con resistencia, inductancia, capacitancia y frecuencia.">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+      color: #0073aa;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+    }
+    button {
+      width: 100%;
+      padding: 0.7em;
+      background: #0073aa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #resultado {
+      margin-top: 1em;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.2em;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora de Impedancia (RLC)</h2>
+
+    <label for="resistencia">Resistencia (R) en Ω:</label>
+    <input type="number" id="resistencia" placeholder="Ej: 100" min="0" step="any" />
+
+    <label for="inductancia">Inductancia (L) en H:</label>
+    <input type="number" id="inductancia" placeholder="Ej: 0.05" min="0" step="any" />
+
+    <label for="capacitancia">Capacitancia (C) en F:</label>
+    <input type="number" id="capacitancia" placeholder="Ej: 0.000001" min="0" step="any" />
+
+    <label for="frecuencia">Frecuencia (f) en Hz:</label>
+    <input type="number" id="frecuencia" placeholder="Ej: 60" min="0" step="any" />
+
+    <button onclick="calcularImpedancia()">Calcular Impedancia</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularImpedancia() {
+      const R = parseFloat(document.getElementById("resistencia").value);
+      const L = parseFloat(document.getElementById("inductancia").value);
+      const C = parseFloat(document.getElementById("capacitancia").value);
+      const f = parseFloat(document.getElementById("frecuencia").value);
+
+      if ([R, L, C, f].some(v => isNaN(v) || v < 0)) {
+        document.getElementById("resultado").innerText = "Ingrese valores válidos (≥ 0) en todos los campos.";
+        return;
+      }
+
+      const omega = 2 * Math.PI * f; // ω = 2πf
+      const XL = omega * L;           // Reactancia inductiva
+      const XC = C === 0 ? 0 : 1 / (omega * C);  // Reactancia capacitiva, evitar división por 0
+
+      const Z = Math.sqrt(R*R + Math.pow(XL - XC, 2));
+
+      document.getElementById("resultado").innerText = 
+        `Impedancia Z = ${Z.toFixed(3)} Ω`;
+    }
+  </script>
+</body>
+</html>
