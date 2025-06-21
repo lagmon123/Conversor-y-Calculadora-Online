@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Ley de Ohm</title>
+  <meta name="description" content="Calculadora basada en la Ley de Ohm. Calcula voltaje (V), corriente (I) o resistencia (R) fácilmente.">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+      color: #0073aa;
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+    }
+    button {
+      width: 100%;
+      padding: 0.7em;
+      background: #0073aa;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #resultado {
+      margin-top: 1em;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora Ley de Ohm</h2>
+
+    <label for="calcular">¿Qué querés calcular?</label>
+    <select id="calcular" onchange="ajustarCampos()">
+      <option value="voltaje">Voltaje (V)</option>
+      <option value="corriente">Corriente (I)</option>
+      <option value="resistencia">Resistencia (R)</option>
+    </select>
+
+    <label id="label1" for="valor1">Corriente (I) en A:</label>
+    <input type="number" id="valor1" placeholder="Ej: 2" />
+
+    <label id="label2" for="valor2">Resistencia (R) en Ω:</label>
+    <input type="number" id="valor2" placeholder="Ej: 10" />
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function ajustarCampos() {
+      const calcular = document.getElementById("calcular").value;
+      const label1 = document.getElementById("label1");
+      const label2 = document.getElementById("label2");
+
+      if (calcular === "voltaje") {
+        label1.innerText = "Corriente (I) en A:";
+        label2.innerText = "Resistencia (R) en Ω:";
+      } else if (calcular === "corriente") {
+        label1.innerText = "Voltaje (V) en V:";
+        label2.innerText = "Resistencia (R) en Ω:";
+      } else {
+        label1.innerText = "Voltaje (V) en V:";
+        label2.innerText = "Corriente (I) en A:";
+      }
+
+      document.getElementById("valor1").value = "";
+      document.getElementById("valor2").value = "";
+      document.getElementById("resultado").innerText = "";
+    }
+
+    function calcular() {
+      const calcular = document.getElementById("calcular").value;
+      const v1 = parseFloat(document.getElementById("valor1").value);
+      const v2 = parseFloat(document.getElementById("valor2").value);
+
+      if (isNaN(v1) || isNaN(v2)) {
+        document.getElementById("resultado").innerText = "Ingrese valores válidos.";
+        return;
+      }
+
+      let resultado = 0;
+      let unidad = "";
+
+      if (calcular === "voltaje") {
+        resultado = v1 * v2;
+        unidad = "V";
+      } else if (calcular === "corriente") {
+        resultado = v1 / v2;
+        unidad = "A";
+      } else {
+        resultado = v1 / v2;
+        unidad = "Ω";
+      }
+
+      document.getElementById("resultado").innerText =
+        "Resultado: " + resultado.toFixed(2) + " " + unidad;
+    }
+  </script>
+</body>
+</html>
